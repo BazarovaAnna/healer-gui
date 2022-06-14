@@ -8,18 +8,16 @@
         <td class="penta" colspan="3">
           <SwitchVi label="Помощь с пентаграммой" checked v-on:change="triggerPenta"/>
         </td></tr>
-
-
       <tr v-for="ingred in dataInfo"
           class="ingred" :key="ingred.code">
         <td class="ingrNam">Необходимое количество: {{ingred.name}}</td>
         <td class="ingr">
-          <Slider v-model="values[ingred.code]" :max="ingred.maxAmount"/>
+          <Slider v-model="value" :max="ingred.maxAmount"/>
         </td>
-        <td class="ingr"><input class="inpVal" v-model="values[ingred.code]" placeholder="{{values[ingred.code]}}" v-on:change="validate(ingred.code,ingred.maxAmount)"></td>
+        <td class="ingr"><input class="inpVal" v-model="value" placeholder="{{value}}" v-on:change="validate(value, maxVal)"></td>
       </tr>
-
-
+      <!--сделать цикл-->
+      {{dataInfo}}
       <tr><td class="dop" colspan="2">
         <textarea class="inpVal" v-model="addInfo" placeholder="Дополнительно:"></textarea></td></tr>
       <tr><td class="btnLayer" colspan="3"><button class="btn1" v-on:click="send">Отправить</button></td></tr>
@@ -48,7 +46,8 @@ export default {
   data() {
     return {
       needPenta: true,
-      values: {},
+      value: 0,
+      maxVal:20,
       costil: 1,
       addInfo: null,
       dataInfo:null
@@ -94,9 +93,9 @@ export default {
     send(){
       //TODO
     },
-    validate(code,maxV){
-      if(this.values[code]>maxV){
-        this.value[code]=maxV;
+    validate(){
+      if(this.value>this.maxVal){
+        this.value=this.maxVal;
       }
     }
   }
