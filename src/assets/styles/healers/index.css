@@ -36,7 +36,6 @@
 }
 
 .output {
-    font-family: Courier, Courier New, Lucida Console, Monaco, Consolas;
     background: #000000;
     color: #ffffff;
     padding: 20px;
@@ -49,6 +48,8 @@
 
 .ingrNam {
     width: 50%;
+    text-align: left;
+    padding-left: 10%;
 }
 .ingr {
     width: 25%
@@ -92,4 +93,13 @@ button.btn1:hover {
 button.btn1:focus {
     outline: none;
     box-shadow: 0 0 0 4px #ebf6e8;
+}
+
+.fter {
+    height: 4%;
+    width: 100%;
+}
+
+.notification{
+    width: 100%;
 }

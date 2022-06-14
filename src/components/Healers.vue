@@ -12,15 +12,20 @@
           class="ingred" :key="ingred.code">
         <td class="ingrNam">Необходимое количество: {{ingred.name}}</td>
         <td class="ingr">
-          <Slider v-model="value" :max="ingred.maxAmount"/>
+          <Slider v-model="ingred.amount" :max="ingred.maxAmount" />
         </td>
-        <td class="ingr"><input class="inpVal" v-model="value" placeholder="{{value}}" v-on:change="validate(value, maxVal)"></td>
+        <td class="ingr"><input class="inpVal" v-model="ingred.amount" placeholder="0" v-on:change="ingred.amount=Math.min(ingred.amount,ingred.maxAmount)"></td>
       </tr>
       <!--сделать цикл-->
-      {{dataInfo}}
       <tr><td class="dop" colspan="2">
-        <textarea class="inpVal" v-model="addInfo" placeholder="Дополнительно:"></textarea></td></tr>
-      <tr><td class="btnLayer" colspan="3"><button class="btn1" v-on:click="send">Отправить</button></td></tr>
+        <textarea class="inpVal" v-model="addInfo" placeholder="Дополнительно:"></textarea></td>
+        <td></td>
+      </tr>
+      <tr><td class="btnLayer" colspan="3"><button class="btn1" v-on:click="send">Отправить</button>
+      </td></tr>
+      <tr class="fter"><td class="notification" colspan="3"><div v-show="notificationIsShow">
+        Отправлено успешно!
+      </div></td></tr>
     </table>
   </div>
 </template>
@@ -49,7 +54,8 @@ export default {
       value: 0,
       maxVal:20,
       costil: 1,
-      addInfo: null,
+      addInfo: "",
+      notificationIsShow: false,
       dataInfo:null
     }
   },
@@ -60,6 +66,14 @@ export default {
       console.log("got trigger");
       this.needPenta = !this.needPenta;
     }},
+    makeIngrList(){
+      let index;
+      for (index = 0; index < this.dataInfo.length; ++index) {
+        //console.log(this.dataInfo[index]);
+        this.dataInfo[index]["amount"]=0;
+        console.log(this.dataInfo[index]);
+      }
+    },
     getIngr(url){
       return axios
           .get(url, {
@@ -74,6 +88,7 @@ export default {
             this.dataInfo = response.data.resources;
             console.log("in get");
             console.log(this.dataInfo);
+            this.makeIngrList();
           })
           .catch(error => {
             if (error.response) {
@@ -91,12 +106,49 @@ export default {
           });
     },
     send(){
+      let url="http://localhost:8080/api/v1/healer/request";
       //TODO
-    },
-    validate(){
-      if(this.value>this.maxVal){
-        this.value=this.maxVal;
+      console.log(this.dataInfo);
+      const body = {
+        "helperId": 0,
+        "healerId": 1,
+        "requiredPentaHelp": this.needPenta,
+        "requestedResources": [],
+        "description": this.addInfo
       }
+      let index;
+      for (index = 0; index < this.dataInfo.length; ++index) {
+        //console.log(this.dataInfo[index]);
+        if(this.dataInfo[index].amount){
+          const res = {
+            "resourceCode": this.dataInfo[index].code,
+            "amount":this.dataInfo[index].amount
+          }
+          body.requestedResources.push(res);
+        }
+      }
+      console.log(body);
+      return axios
+          .post(url, body,{
+            headers: {
+              "Content-Type": "application/json"
+            },
+            auth: {
+              username: 'healer',
+              password: 'healer_pass'
+            }
+          }).then(()=>{
+            this.notificationIsShow = true;
+            setTimeout(() => {
+              this.notificationIsShow = false;
+            }, 3000);
+      });
+    },
+    validate(code, maxA){
+      if(this.value[code]>maxA){
+        this.value[code]=maxA;
+      }
+      this.addVal(code,this.value);
     }
   }
 }
