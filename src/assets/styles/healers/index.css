@@ -1,0 +1,95 @@
+.content {
+    width: 70%;
+    height: 100%;
+    position: fixed;
+    left: 15%;
+    border: thin solid #6C8EBF;
+    background: #DAE8FC;
+    color: #666666;
+    overflow: auto;
+}
+.head {
+    width: 65%;
+    position: fixed;
+    left: 15%;
+    background: lightgrey;
+    height: 5%;
+    border: thin solid #6C8EBF;
+    font-size: large;
+    text-align: left;
+    padding-left: 5%;
+    padding-top: 1%;
+}
+.form {
+    width: 60%;
+    height: 85%;
+    position: fixed;
+    left: 20%;
+    top: 10%;
+    border: medium solid #6C8EBF;
+}
+
+.penta{
+    width: 100%;
+    text-align: left;
+    padding-left: 10%;
+}
+
+.output {
+    font-family: Courier, Courier New, Lucida Console, Monaco, Consolas;
+    background: #000000;
+    color: #ffffff;
+    padding: 20px;
+    margin-bottom: 50px;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+.ingrNam {
+    width: 50%;
+}
+.ingr {
+    width: 25%
+}
+.inpVal {
+    width: 50%;
+    background: #EEEEEE;
+    border-width: thin;
+    border-color: lightgrey;
+}
+.dop {
+    width: 100%;
+    text-align: left;
+    padding-left: 10%;
+}
+
+.btnLayer {
+    width: 100%;
+    text-align: center;
+}
+
+button {
+    width: 15%;
+}
+
+button.btn1 {
+    appearance: none;
+    border-color: #82B366;
+    border-radius: 10px;
+    border-width: medium;
+    background: #D5E8D4;
+    color: #000;
+    padding: 8px;
+    font-size: 16px;
+}
+
+button.btn1:hover {
+    background: #c1daba;
+}
+
+button.btn1:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px #ebf6e8;
+}
